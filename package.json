@@ -1,0 +1,11 @@
+{
+	"name": "tagteam-client",
+	"version": "0.0.0",
+	"description": "Tagteam client",
+	"author": "Chiel Kunkels (@chielkunkels)",
+	"main": "app.js",
+	"dependencies": {
+		"express": "3.3.x",
+		"prime": "0.2.x"
+	}
+}
