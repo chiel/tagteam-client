@@ -10,11 +10,11 @@ The `routes.json` must follow a format that looks something like this:
 
 ```json
 {
-	"/": {
-		"get": "dashboard"
+  "/": {
+    "get": "dashboard"
   },
-	"/register": {
-		"get": "register"
+  "/register": {
+    "get": "register"
   }
 }
 ```
@@ -23,11 +23,21 @@ Which essentially follows the structure of:
 
 ```json
 {
-	"/my-route": {
-		"http-verb": "function"
+  "/my-route": {
+    "http-verb": "function"
   }
 }
 ```
 
 Where function is a function found in the `controller.js`.
+
+If you are only specifying a `GET` route, you can also use a shorthand like
+
+```json
+{
+  "/my-route": "function"
+}
+```
+
+This will then automatically assume `get`.
 
