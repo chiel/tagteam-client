@@ -57,9 +57,54 @@ var signupPost = {
 	}
 };
 
+/**
+ *
+ */
+var login = {
+	body: function(){
+		return new Promise(function(resolve){
+			template.render('/views/forms/login.html', {action: '/login'}).then(
+				function(rendered){
+					resolve(rendered);
+				},
+				function(error){
+					console.log(error);
+					resolve('something wrong rendering');
+				}
+			);
+		});
+	}
+};
+
+/**
+ *
+ */
+var loginPost = {
+	body: function(req){
+		return new Promise(function(resolve){
+			if (!req.body.email || !req.body.password){
+				resolve('Email or password missing');
+				return;
+			}
+			userLib.login(req.body.email, req.body.password).then(
+				function(userData){
+					console.log('login succeeded', userData);
+					resolve('login succeesed');
+				},
+				function(error){
+					console.log('failed to login', error);
+					resolve('login failed');
+				}
+			);
+		});
+	}
+};
+
 module.exports = {
 	index: index,
 	signup: signup,
-	signupPost: signupPost
+	signupPost: signupPost,
+	login: login,
+	loginPost: loginPost
 };
 
