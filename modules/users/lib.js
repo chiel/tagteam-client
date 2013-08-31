@@ -70,7 +70,57 @@ function signup(email, password){
 	});
 }
 
+/**
+ *
+ */
+function login(email, password){
+	return new Promise(function(resolve, reject){
+		if (!email || !password){
+			// TODO: should be an ArgumentError
+			reject(new Error('E-mail or password not provided'));
+			return;
+		}
+
+		client.connect('mongodb://127.0.0.1:27017/test', function(err, db){
+			if (err){
+				console.log('Failed to connect to MongoDB');
+				reject(new Error('Failed to connect to MongoDB'));
+				return;
+			}
+
+			var collection = db.collection('user');
+			collection.findOne({email: email}, function(err, doc){
+				db.close();
+				if (err){
+					reject(new Error('Failed to query collection'));
+					return;
+				}
+
+				if (!doc){
+					reject(new Error('Could not find user with that email'));
+					return;
+				}
+
+				bcrypt.compare(password, doc.password, function(err, equal){
+					if (err){
+						reject(new Error('Failed to do bcrypt compare'));
+						return;
+					}
+
+					if (!equal){
+						reject(new Error('Incorrect password'));
+						return;
+					}
+
+					resolve(doc);
+				});
+			});
+		});
+	});
+}
+
 module.exports = {
-	signup: signup
+	signup: signup,
+	login: login
 };
 
