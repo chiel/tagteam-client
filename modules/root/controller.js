@@ -1,8 +1,17 @@
 'use strict';
 
-function index(req, res){
-	res.send('index');
-}
+var Promise = require('promise');
+
+/**
+ *
+ */
+var index = {
+	body: function(){
+		return new Promise(function(resolve){
+			resolve('index');
+		});
+	}
+};
 
 module.exports = {
 	index: index
