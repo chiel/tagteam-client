@@ -2,7 +2,9 @@
 
 var Promise = require('promise'),
 	client = require('mongodb').MongoClient,
-	bcrypt = require('bcrypt');
+	bcrypt = require('bcrypt'),
+	config = require('./../../lib/config')('/modules/users/config.json'),
+	User = require('./model');
 
 /**
  * Sign a new user up
@@ -24,7 +26,7 @@ function signup(email, password){
 			return;
 		}
 
-		client.connect('mongodb://127.0.0.1:27017/test', function(err, db){
+		client.connect(config.db, function(err, db){
 			if (err){
 				console.log('Failed to connect to MongoDB');
 				reject(new Error('Failed to connect to MongoDB'));
@@ -71,7 +73,10 @@ function signup(email, password){
 }
 
 /**
- *
+ * Log a user in
+ * @param {String} email
+ * @param {String} password
+ * @return {Promise}
  */
 function login(email, password){
 	return new Promise(function(resolve, reject){
@@ -81,7 +86,7 @@ function login(email, password){
 			return;
 		}
 
-		client.connect('mongodb://127.0.0.1:27017/test', function(err, db){
+		client.connect(config.db, function(err, db){
 			if (err){
 				console.log('Failed to connect to MongoDB');
 				reject(new Error('Failed to connect to MongoDB'));
@@ -112,7 +117,7 @@ function login(email, password){
 						return;
 					}
 
-					resolve(doc);
+					resolve(new User(doc));
 				});
 			});
 		});
