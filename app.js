@@ -9,6 +9,7 @@ var express = require('express'),
 	app = express();
 
 app
+	.use(express.static('public'))
 	.use(express.bodyParser())
 	.use(express.cookieParser())
 	.use(express.session(config.cookie));

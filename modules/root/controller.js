@@ -9,6 +9,8 @@ var Promise = require('promise'),
  */
 function index(req){
 	return {
+		header: '/views/header.html',
+		footer: '/views/footer.html',
 		body: new Promise(function(resolve){
 			resolve('index');
 		})
