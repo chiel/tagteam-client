@@ -87,8 +87,8 @@ var loginPost = {
 				return;
 			}
 			userLib.login(req.body.email, req.body.password).then(
-				function(userData){
-					console.log('login succeeded', userData);
+				function(user){
+					req.session.user = user.getPublicData();
 					resolve('login succeesed');
 				},
 				function(error){

@@ -5,9 +5,13 @@ if (process.cwd() != __dirname){
 }
 
 var express = require('express'),
+	config = require('./lib/config')('/config/config.json'),
 	app = express();
 
-app.use(express.bodyParser());
+app
+	.use(express.bodyParser())
+	.use(express.cookieParser())
+	.use(express.session(config.cookie));
 
 require('./lib/routes')(app);
 

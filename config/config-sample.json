@@ -1,0 +1,6 @@
+{
+	"cookie": {
+		"secret": "my_secret_string",
+		"key": "tagteam"
+	}
+}
