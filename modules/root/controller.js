@@ -81,7 +81,7 @@ function login(){
 /**
  *
  */
-function loginPost(req){
+function loginPost(req, res){
 	return {
 		body: new Promise(function(resolve){
 			if (!req.body.email || !req.body.password){
@@ -91,7 +91,7 @@ function loginPost(req){
 			userLib.login(req.body.email, req.body.password).then(
 				function(user){
 					req.session.user = user.getPublicData();
-					resolve('login succeesed');
+					res.redirect('/');
 				},
 				function(error){
 					console.log('failed to login', error);
