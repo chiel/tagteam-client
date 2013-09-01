@@ -7,20 +7,20 @@ var Promise = require('promise'),
 /**
  *
  */
-var index = {
-	body: function(){
-		return new Promise(function(resolve){
+function index(req){
+	return {
+		body: new Promise(function(resolve){
 			resolve('index');
-		});
-	}
-};
+		})
+	};
+}
 
 /**
  *
  */
-var signup = {
-	body: function(){
-		return new Promise(function(resolve){
+function signup(){
+	return {
+		body: new Promise(function(resolve){
 			template.render('/views/forms/signup.html', {action: '/signup'}).then(
 				function(rendered){
 					resolve(rendered);
@@ -30,16 +30,16 @@ var signup = {
 					resolve('something wrong rendering');
 				}
 			);
-		});
-	}
-};
+		})
+	};
+}
 
 /**
  *
  */
-var signupPost = {
-	body: function(req){
-		return new Promise(function(resolve){
+function signupPost(req){
+	return {
+		body: new Promise(function(resolve){
 			if (!req.body.email || !req.body.password){
 				resolve('Email or password missing');
 				return;
@@ -53,16 +53,16 @@ var signupPost = {
 					resolve('signup failed');
 				}
 			);
-		});
-	}
-};
+		})
+	};
+}
 
 /**
  *
  */
-var login = {
-	body: function(){
-		return new Promise(function(resolve){
+function login(){
+	return {
+		body: new Promise(function(resolve){
 			template.render('/views/forms/login.html', {action: '/login'}).then(
 				function(rendered){
 					resolve(rendered);
@@ -72,16 +72,16 @@ var login = {
 					resolve('something wrong rendering');
 				}
 			);
-		});
-	}
-};
+		})
+	};
+}
 
 /**
  *
  */
-var loginPost = {
-	body: function(req){
-		return new Promise(function(resolve){
+function loginPost(req){
+	return {
+		body: new Promise(function(resolve){
 			if (!req.body.email || !req.body.password){
 				resolve('Email or password missing');
 				return;
@@ -96,9 +96,9 @@ var loginPost = {
 					resolve('login failed');
 				}
 			);
-		});
-	}
-};
+		})
+	};
+}
 
 module.exports = {
 	index: index,

@@ -24,7 +24,7 @@ Which essentially follows the structure of:
 ```json
 {
   "/my-route": {
-    "http-verb": "definition"
+    "http-verb": "fn"
   }
 }
 ```
@@ -33,29 +33,29 @@ If you are only specifying a `GET` route, you can also use a shorthand like
 
 ```json
 {
-  "/my-route": "definition"
+  "/my-route": "fn"
 }
 ```
 
-`definition` references an object found in the `controller.js` describing the
-route which looks something like this:
+`fn` references a function found in the `controller.js` which returns an object
+describing the route:
 
 ```javascript
 module.exports = {
-  definition: {
-    header: '/path/to/header.html',
-    footer: '/path/to/footer.html',
-    body: function(req, res){
-      return new Promise(function(resolve){
+  fn: function(req, res){
+    return {
+      header: '/path/to/header.html',
+      footer: '/path/to/footer.html',
+      body: new Promise(function(resolve){
         resolve('my content');
-      });
-    }
+      })
+    };
   }
 };
 ```
 
 The router will render the specified `header` and `footer` and put the contents
-which are passed through the `resolve` of the returned Promise in between them.
+which are passed through the `resolve` of the body Promise in between them.
 
 `header` and `footer` are optional.
 
